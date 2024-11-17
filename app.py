@@ -5,6 +5,7 @@ import os
 import numpy as np
 from dotenv import load_dotenv
 from openai import OpenAI
+import utils as ut
 
 
 #get out API key
@@ -64,15 +65,20 @@ def make_predictions(input_df, input_dict):
         'Random Forest': random_forest_model.predict_proba(input_df)[0][1],
         'K-Nearest Neighbors': knn_model.predict_proba(input_df)[0][1],
     }
-
     avg_probability = np.mean(list(probabilities.values()))
+    col1, col2 = st.columns(2)
 
-    st.markdown("### Model Probabilities")
-    for model, prob in probabilities.items():
-        st.write(f"{model}: {prob}")
-    st.write(f"Average Probability: {avg_probability}")
+    with col1:
+        fig = ut.create_gauge_chart(avg_probability)
+        st.plotly_chart(fig, use_container_width=True)
+        st.write(f"The customer has a {avg_probability: .2%} probability of churning.")
+
+    with col2:
+        fig_probs = ut.create_model_probability_chart(probabilities)
+        st.plotly_chart(fig_probs, use_container_width=True)
 
     return avg_probability
+
 
 def explain_prediction(probability, input_dict, surname):
     prompt = f"""

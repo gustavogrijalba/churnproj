@@ -10,3 +10,4 @@ ipykernel
 imblearn
 pickle
 dotenv
+plotly

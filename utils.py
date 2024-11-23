@@ -95,3 +95,7 @@ def create_model_probability_chart(probabilities):
     )
 
     return fig
+#allow users to download chart
+def download_model_probability_chart():
+    #implementation here
+    print('Help me implement this!')

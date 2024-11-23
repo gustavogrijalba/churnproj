@@ -267,6 +267,7 @@ if selected_customer_option:
     st.markdown('--------')
     st.subheader('Personalized Email')
     st.markdown(email)
+    st.markdown('__________')
 
 
 
